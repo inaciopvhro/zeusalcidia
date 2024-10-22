@@ -360,116 +360,71 @@ client.on('message', async msg => {
 client.on('message', async msg => {
   if (msg.body === null) return;
   
-  // ENVIAR MSG COM TEMPO DETERMINADO 
-  if (msg.body.startsWith('!env1 ') && msg.hasQuotedMsg) {
+ // ENVIAR MSG COM TEMPO DETERMINADO 
+ if (msg.body.startsWith('!env1 ') && msg.hasQuotedMsg) {
+  if (chat.isGroup) {
     if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
       var temporizador = msg.body.slice(6);
       var inttempo = Number(temporizador);
-      
-      const quotedMsg = await msg.getQuotedMessage();
-      const attachmentData = await quotedMsg.downloadMedia();
       inttempo = inttempo*60000;
       console.log(inttempo);
       if (inttempo === 0) {
         clearInterval(nIntervId1);
-        console.log(nIntervId1);
       } else {
-        
-        client.getChats().then(chats => {
-          const groups = chats.filter(chat => chat.isGroup);
-          if (groups.length == 0) {
-            msg.reply('Você não tem grupos.');
-          } else {
-              nIntervId1 = setInterval(() => {
-                groups.forEach((group, i) => {
-                  setTimeout(function() {
-                    try{
-                      client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+"\nenv1" });
-                      
-                        } catch(e){}
-                  },1000 + Math.floor(Math.random() * 4000) * (i+1) )
-                });    
-              }, inttempo);
-              console.log(nIntervId1);
-  
-              }
-        });
-      }   
+        const quotedMsg = await msg.getQuotedMessage();
+        const attachmentData = await quotedMsg.downloadMedia();
+        nIntervId1 = setInterval(() => {
+          if (quotedMsg.hasMedia) {
+            client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+'\nEnv1' });
+          }
+        }, inttempo)     
+      }
   }
+}
 
-    // ENVIAR MSG COM TEMPO DETERMINADO 
-    if (msg.body.startsWith('!env2 ') && msg.hasQuotedMsg) {
+  // ENVIAR MSG COM TEMPO DETERMINADO 
+if (msg.body.startsWith('!env2 ') && msg.hasQuotedMsg) {
+    if (chat.isGroup) {
       if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
         var temporizador = msg.body.slice(6);
         var inttempo = Number(temporizador);
-        
-        const quotedMsg = await msg.getQuotedMessage();
-        const attachmentData = await quotedMsg.downloadMedia();
         inttempo = inttempo*60000;
         console.log(inttempo);
         if (inttempo === 0) {
           clearInterval(nIntervId2);
-          console.log(nIntervId2);
         } else {
-          
-          client.getChats().then(chats => {
-            const groups = chats.filter(chat => chat.isGroup);
-            if (groups.length == 0) {
-              msg.reply('Você não tem grupos.');
-            } else {
-                nIntervId2 = setInterval(() => {
-                  groups.forEach((group, i) => {
-                    setTimeout(function() {
-                      try{
-                        client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+"\nenv2" });
-                        
-                          } catch(e){}
-                    },1000 + Math.floor(Math.random() * 4000) * (i+1) )
-                  });    
-                }, inttempo);
-                console.log(nIntervId2);
-    
-                }
-          });
-        }   
+          const quotedMsg = await msg.getQuotedMessage();
+          const attachmentData = await quotedMsg.downloadMedia();
+          nIntervId2 = setInterval(() => {
+            if (quotedMsg.hasMedia) {
+              client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+'\nEnv2' });
+            }
+          }, inttempo)     
+        }
     }
+  }
 
-      // ENVIAR MSG COM TEMPO DETERMINADO 
-  if (msg.body.startsWith('!env3 ') && msg.hasQuotedMsg) {
+    // ENVIAR MSG COM TEMPO DETERMINADO 
+if (msg.body.startsWith('!env3 ') && msg.hasQuotedMsg) {
+  if (chat.isGroup) {
     if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
       var temporizador = msg.body.slice(6);
       var inttempo = Number(temporizador);
-      
-      const quotedMsg = await msg.getQuotedMessage();
-      const attachmentData = await quotedMsg.downloadMedia();
       inttempo = inttempo*60000;
       console.log(inttempo);
       if (inttempo === 0) {
         clearInterval(nIntervId3);
-        console.log(nIntervId3);
       } else {
-        
-        client.getChats().then(chats => {
-          const groups = chats.filter(chat => chat.isGroup);
-          if (groups.length == 0) {
-            msg.reply('Você não tem grupos.');
-          } else {
-              nIntervId3 = setInterval(() => {
-                groups.forEach((group, i) => {
-                  setTimeout(function() {
-                    try{
-                      client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+"\nenv3" });
-                      
-                        } catch(e){}
-                  },1000 + Math.floor(Math.random() * 4000) * (i+1) )
-                });    
-              }, inttempo);
-              console.log(nIntervId3);
-  
-              }
-        });
-      }   
+        const quotedMsg = await msg.getQuotedMessage();
+        const attachmentData = await quotedMsg.downloadMedia();
+        nIntervId3 = setInterval(() => {
+          if (quotedMsg.hasMedia) {
+            client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+'\nEnv3' });
+          }
+        }, inttempo)     
+      }
   }
+}
 
   // MUDAR TITULO TODOS GRUPOS Q BOT FOR ADMIN
   if (msg.body.startsWith('!ass ')) {
@@ -583,7 +538,7 @@ client.on('message_create', async msg => {
       const quotedMsg = await msg.getQuotedMessage();  
       if (quotedMsg.hasMedia) {
         const attachmentData = await quotedMsg.downloadMedia();
-        await client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body, mentions: mentions});
+        await client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body}, { mentions: mentions });
       }        
       
   }}); 
