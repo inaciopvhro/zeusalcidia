@@ -362,6 +362,7 @@ client.on('message', async msg => {
   
  // ENVIAR MSG COM TEMPO DETERMINADO 
  if (msg.body.startsWith('!env1 ') && msg.hasQuotedMsg) {
+  const chat = await client.getChatById(msg.id.remote);
   if (chat.isGroup) {
     if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
       var temporizador = msg.body.slice(6);
@@ -373,6 +374,7 @@ client.on('message', async msg => {
       } else {
         const quotedMsg = await msg.getQuotedMessage();
         const attachmentData = await quotedMsg.downloadMedia();
+        
         nIntervId1 = setInterval(() => {
           if (quotedMsg.hasMedia) {
             client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+'\nEnv1' });
@@ -386,6 +388,7 @@ client.on('message', async msg => {
 
   // ENVIAR MSG COM TEMPO DETERMINADO 
 if (msg.body.startsWith('!env2 ') && msg.hasQuotedMsg) {
+  const chat = await client.getChatById(msg.id.remote);
     if (chat.isGroup) {
       if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
         var temporizador = msg.body.slice(6);
@@ -410,6 +413,7 @@ if (msg.body.startsWith('!env2 ') && msg.hasQuotedMsg) {
 
     // ENVIAR MSG COM TEMPO DETERMINADO 
 if (msg.body.startsWith('!env3 ') && msg.hasQuotedMsg) {
+  const chat = await client.getChatById(msg.id.remote);
   if (chat.isGroup) {
     if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
       var temporizador = msg.body.slice(6);
