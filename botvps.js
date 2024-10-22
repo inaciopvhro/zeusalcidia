@@ -13,8 +13,11 @@ const io = socketIO(server);
 const mysql = require('mysql2/promise');
 
 // PORTA ONDE O SERVIÇO SERÁ INICIADO
-const port = 3300;
+const port = 3100;
 const idClient = 'BotZeus';
+var nIntervId1;
+var nIntervId2;
+var nIntervId3;
 
 // NUMEROS AUTORIZADOS
 const permissaoBot = ["556992102573@c.us","556993405268@c.us","556992762113@c.us","556993003146@c.us"];
@@ -79,7 +82,7 @@ const client = new Client({
   puppeteer: { headless: true,
   //executablePath: '/usr/bin/google-chrome-stable',
   //executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-  executablePath: '/usr/bin/chromium-browser',  
+  //executablePath: '/usr/bin/chromium-browser',  
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
@@ -99,7 +102,7 @@ client.initialize();
 io.on('connection', function(socket) {
   socket.emit('message', '© BOT-Zeus - Iniciado');
   socket.emit('qr', './whatsappDesconetado.png');
-
+  console.log("iniciado");
 
 client.on('qr', (qr) => {
     console.log('QR RECEIVED', qr);
@@ -122,7 +125,7 @@ client.on('auth_failure', function() {
 
 client.on('change_state', state => {
   console.log('© BOT-Zeus Status de conexão: ', state );
-  socket.emit('message', '© BOT-Zeus Status de conexão: ', state);
+  socket.emit('message', '© BOT-Zeus Status de conexão: '+ state);
 });
 
 client.on('disconnected', (reason) => {
@@ -146,49 +149,49 @@ client.on('disconnected', (reason) => {
   }));
 });
 
-setInterval(() => {
-  var dataAtual = new Date();
-  var horas = dataAtual.getHours();
-  var minutos = dataAtual.getMinutes();
-//  console.log("Agora são " + horas + ":" + minutos + "h.");
-  if (horas === 23 && minutos === 58) {
-    confighora(1);
-  } else if (horas === 6 && minutos === 58) {
-    confighora(8);
-  } else if (horas === 7 && minutos === 58) {
-    confighora(9);
-  } else if (horas === 8 && minutos === 58) {
-    confighora(10);
-  } else if (horas === 9 && minutos === 58) {
-    confighora(11);
-  } else if (horas === 10 && minutos === 58) {
-    confighora(12);
-  } else if (horas === 11 && minutos === 58) {
-    confighora(13);
-  } else if (horas === 12 && minutos === 58) {
-    confighora(14);
-  } else if (horas === 13 && minutos === 58) {
-    confighora(15);
-  } else if (horas === 14 && minutos === 58) {
-    confighora(16);
-  } else if (horas === 15 && minutos === 58) {
-    confighora(17);
-  } else if (horas === 16 && minutos === 58) {
-    confighora(18);
-  } else if (horas === 17 && minutos === 58) {
-    confighora(19);
-  } else if (horas === 18 && minutos === 58) {
-    confighora(20);
-  } else if (horas === 19 && minutos === 58) {
-    confighora(21);
-  } else if (horas === 20 && minutos === 58) {
-    confighora(22);
-  } else if (horas === 21 && minutos === 58) {
-    confighora(23);
-  } else if (horas === 22 && minutos === 58) {
-    confighora(0);
-  }
-}, 50000);
+// var idHorarios = setInterval(() => {
+//   var dataAtual = new Date();
+//   var horas = dataAtual.getHours();
+//   var minutos = dataAtual.getMinutes();
+// //  console.log("Agora são " + horas + ":" + minutos + "h.");
+//   if (horas === 23 && minutos === 58) {
+//     confighora(1);
+//   } else if (horas === 6 && minutos === 58) {
+//     confighora(8);
+//   } else if (horas === 7 && minutos === 58) {
+//     confighora(9);
+//   } else if (horas === 8 && minutos === 58) {
+//     confighora(10);
+//   } else if (horas === 9 && minutos === 58) {
+//     confighora(11);
+//   } else if (horas === 10 && minutos === 58) {
+//     confighora(12);
+//   } else if (horas === 11 && minutos === 58) {
+//     confighora(13);
+//   } else if (horas === 12 && minutos === 58) {
+//     confighora(14);
+//   } else if (horas === 13 && minutos === 58) {
+//     confighora(15);
+//   } else if (horas === 14 && minutos === 58) {
+//     confighora(16);
+//   } else if (horas === 15 && minutos === 58) {
+//     confighora(17);
+//   } else if (horas === 16 && minutos === 58) {
+//     confighora(18);
+//   } else if (horas === 17 && minutos === 58) {
+//     confighora(19);
+//   } else if (horas === 18 && minutos === 58) {
+//     confighora(20);
+//   } else if (horas === 19 && minutos === 58) {
+//     confighora(21);
+//   } else if (horas === 20 && minutos === 58) {
+//     confighora(22);
+//   } else if (horas === 21 && minutos === 58) {
+//     confighora(23);
+//   } else if (horas === 22 && minutos === 58) {
+//     confighora(0);
+//   }
+// }, 50000);
 
 function confighora(horaenvio) {
   const texto1 = "*HORÁRIOS PAGANTES*\n"+
@@ -356,45 +359,118 @@ client.on('message', async msg => {
 // COMANDO BOT
 client.on('message', async msg => {
   if (msg.body === null) return;
+  
   // ENVIAR MSG COM TEMPO DETERMINADO 
-  // if (msg.body.startsWith('!pdrs ') && msg.hasQuotedMsg) {
-  //   if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
-  //   const quotedMsg = await msg.getQuotedMessage();
-  //   const attachmentData = await quotedMsg.downloadMedia();
-    
-  //   nomemedia = setInterval(() => {
+  if (msg.body.startsWith('!env1 ') && msg.hasQuotedMsg) {
+    if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
+      var temporizador = msg.body.slice(6);
+      var inttempo = Number(temporizador);
       
-  //   }, 10000);
-  //   console.log(nomemedia);
+      const quotedMsg = await msg.getQuotedMessage();
+      const attachmentData = await quotedMsg.downloadMedia();
+      inttempo = inttempo*60000;
+      console.log(inttempo);
+      if (inttempo === 0) {
+        clearInterval(nIntervId1);
+        console.log(nIntervId1);
+      } else {
+        
+        client.getChats().then(chats => {
+          const groups = chats.filter(chat => chat.isGroup);
+          if (groups.length == 0) {
+            msg.reply('Você não tem grupos.');
+          } else {
+              nIntervId1 = setInterval(() => {
+                groups.forEach((group, i) => {
+                  setTimeout(function() {
+                    try{
+                      client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+"\nenv1" });
+                      
+                        } catch(e){}
+                  },1000 + Math.floor(Math.random() * 4000) * (i+1) )
+                });    
+              }, inttempo);
+              console.log(nIntervId1);
+  
+              }
+        });
+      }   
+  }
+
+    // ENVIAR MSG COM TEMPO DETERMINADO 
+    if (msg.body.startsWith('!env2 ') && msg.hasQuotedMsg) {
+      if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
+        var temporizador = msg.body.slice(6);
+        var inttempo = Number(temporizador);
+        
+        const quotedMsg = await msg.getQuotedMessage();
+        const attachmentData = await quotedMsg.downloadMedia();
+        inttempo = inttempo*60000;
+        console.log(inttempo);
+        if (inttempo === 0) {
+          clearInterval(nIntervId2);
+          console.log(nIntervId2);
+        } else {
+          
+          client.getChats().then(chats => {
+            const groups = chats.filter(chat => chat.isGroup);
+            if (groups.length == 0) {
+              msg.reply('Você não tem grupos.');
+            } else {
+                nIntervId2 = setInterval(() => {
+                  groups.forEach((group, i) => {
+                    setTimeout(function() {
+                      try{
+                        client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+"\nenv2" });
+                        
+                          } catch(e){}
+                    },1000 + Math.floor(Math.random() * 4000) * (i+1) )
+                  });    
+                }, inttempo);
+                console.log(nIntervId2);
     
-    // let temporizador = msg.body.slice(6);
-    
-    // client.getChats().then(chats => {
-    //   const groups = chats.filter(chat => chat.isGroup);
-    //   if (groups.length == 0) {
-    //     msg.reply('Você não tem grupos.');
-    //   }
-    //   else {
-    //     if (temporizador === 0) {
-    //       clearInterval(idinterval);
-    //     } else {          
-    //       var idinterval = setInterval(() => {
-    //         groups.forEach((group, i) => {
-    //         setTimeout(function() {
-    //           try{
-                
-    //             client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body });
-                 
-    //           } catch(e){
-    //           }
-    //         },1000 + Math.floor(Math.random() * 4000) * (i+1) )
-    //         });
-    //       }, temporizador);
-    //     }
-    //     console.log(idinterval)
-    //   }
-   // });
- // }   
+                }
+          });
+        }   
+    }
+
+      // ENVIAR MSG COM TEMPO DETERMINADO 
+  if (msg.body.startsWith('!env3 ') && msg.hasQuotedMsg) {
+    if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
+      var temporizador = msg.body.slice(6);
+      var inttempo = Number(temporizador);
+      
+      const quotedMsg = await msg.getQuotedMessage();
+      const attachmentData = await quotedMsg.downloadMedia();
+      inttempo = inttempo*60000;
+      console.log(inttempo);
+      if (inttempo === 0) {
+        clearInterval(nIntervId3);
+        console.log(nIntervId3);
+      } else {
+        
+        client.getChats().then(chats => {
+          const groups = chats.filter(chat => chat.isGroup);
+          if (groups.length == 0) {
+            msg.reply('Você não tem grupos.');
+          } else {
+              nIntervId3 = setInterval(() => {
+                groups.forEach((group, i) => {
+                  setTimeout(function() {
+                    try{
+                      client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+"\nidmsg" });
+                      
+                        } catch(e){}
+                  },1000 + Math.floor(Math.random() * 4000) * (i+1) )
+                });    
+              }, inttempo);
+              console.log(nIntervId3);
+  
+              }
+        });
+      }   
+  }
+
   // MUDAR TITULO TODOS GRUPOS Q BOT FOR ADMIN
   if (msg.body.startsWith('!ass ')) {
     if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
@@ -492,7 +568,7 @@ client.on('message', async msg => {
 
 // ENVIAR MSG COM MENÇÃO AOS PARTICIPANTES
 client.on('message_create', async msg => {
-  if (msg.body === '!pdr'&& msg.hasQuotedMsg) {
+  if (msg.body === '!pdr' && msg.hasQuotedMsg) {
     const chat = await client.getChatById(msg.id.remote);
     let mentions = [];
     for(let participant of chat.participants) {
