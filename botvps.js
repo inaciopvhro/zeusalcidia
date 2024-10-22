@@ -149,49 +149,49 @@ client.on('disconnected', (reason) => {
   }));
 });
 
-// var idHorarios = setInterval(() => {
-//   var dataAtual = new Date();
-//   var horas = dataAtual.getHours();
-//   var minutos = dataAtual.getMinutes();
-// //  console.log("Agora são " + horas + ":" + minutos + "h.");
-//   if (horas === 23 && minutos === 58) {
-//     confighora(1);
-//   } else if (horas === 6 && minutos === 58) {
-//     confighora(8);
-//   } else if (horas === 7 && minutos === 58) {
-//     confighora(9);
-//   } else if (horas === 8 && minutos === 58) {
-//     confighora(10);
-//   } else if (horas === 9 && minutos === 58) {
-//     confighora(11);
-//   } else if (horas === 10 && minutos === 58) {
-//     confighora(12);
-//   } else if (horas === 11 && minutos === 58) {
-//     confighora(13);
-//   } else if (horas === 12 && minutos === 58) {
-//     confighora(14);
-//   } else if (horas === 13 && minutos === 58) {
-//     confighora(15);
-//   } else if (horas === 14 && minutos === 58) {
-//     confighora(16);
-//   } else if (horas === 15 && minutos === 58) {
-//     confighora(17);
-//   } else if (horas === 16 && minutos === 58) {
-//     confighora(18);
-//   } else if (horas === 17 && minutos === 58) {
-//     confighora(19);
-//   } else if (horas === 18 && minutos === 58) {
-//     confighora(20);
-//   } else if (horas === 19 && minutos === 58) {
-//     confighora(21);
-//   } else if (horas === 20 && minutos === 58) {
-//     confighora(22);
-//   } else if (horas === 21 && minutos === 58) {
-//     confighora(23);
-//   } else if (horas === 22 && minutos === 58) {
-//     confighora(0);
-//   }
-// }, 50000);
+var idHorarios = setInterval(() => {
+  var dataAtual = new Date();
+  var horas = dataAtual.getHours();
+  var minutos = dataAtual.getMinutes();
+//  console.log("Agora são " + horas + ":" + minutos + "h.");
+  if (horas === 23 && minutos === 58) {
+    confighora(1);
+  } else if (horas === 6 && minutos === 58) {
+    confighora(8);
+  } else if (horas === 7 && minutos === 58) {
+    confighora(9);
+  } else if (horas === 8 && minutos === 58) {
+    confighora(10);
+  } else if (horas === 9 && minutos === 58) {
+    confighora(11);
+  } else if (horas === 10 && minutos === 58) {
+    confighora(12);
+  } else if (horas === 11 && minutos === 58) {
+    confighora(13);
+  } else if (horas === 12 && minutos === 58) {
+    confighora(14);
+  } else if (horas === 13 && minutos === 58) {
+    confighora(15);
+  } else if (horas === 14 && minutos === 58) {
+    confighora(16);
+  } else if (horas === 15 && minutos === 58) {
+    confighora(17);
+  } else if (horas === 16 && minutos === 58) {
+    confighora(18);
+  } else if (horas === 17 && minutos === 58) {
+    confighora(19);
+  } else if (horas === 18 && minutos === 58) {
+    confighora(20);
+  } else if (horas === 19 && minutos === 58) {
+    confighora(21);
+  } else if (horas === 20 && minutos === 58) {
+    confighora(22);
+  } else if (horas === 21 && minutos === 58) {
+    confighora(23);
+  } else if (horas === 22 && minutos === 58) {
+    confighora(0);
+  }
+}, 50000);
 
 function confighora(horaenvio) {
   const texto1 = "*HORÁRIOS PAGANTES*\n"+
