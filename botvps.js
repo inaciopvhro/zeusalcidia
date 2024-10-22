@@ -536,8 +536,8 @@ client.on('message', async msg => {
 client.on('message_create', async msg => {
   if (msg.body === '!pdr' && msg.hasQuotedMsg) {
     const quotedMsg = await msg.getQuotedMessage();  
+    const chat = await msg.getChat();
     
-    const chat = await client.getChatById(msg.id.remote);
     let mentions = [];
     for(let participant of chat.participants) {
       if (participant.id._serialized === msg.author && !participant.isAdmin) 
@@ -551,9 +551,9 @@ client.on('message_create', async msg => {
       if (quotedMsg.hasMedia) {
         
         const attachmentData = await quotedMsg.downloadMedia();
-        await client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body }, { mentions: mentions });
+        await chat.sendMessage(attachmentData, { caption: quotedMsg.body }, { mentions: mentions });
       } else {
-        await client.sendMessage(msg.from, quotedMsg.body, { mentions: mentions });
+        await chat.sendMessage(quotedMsg.body, { mentions: mentions });
       }  
   }}); 
 
