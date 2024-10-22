@@ -82,7 +82,7 @@ const client = new Client({
   puppeteer: { headless: true,
   //executablePath: '/usr/bin/google-chrome-stable',
   //executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-  //executablePath: '/usr/bin/chromium-browser',  
+  executablePath: '/usr/bin/chromium-browser',  
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
@@ -458,7 +458,7 @@ client.on('message', async msg => {
                 groups.forEach((group, i) => {
                   setTimeout(function() {
                     try{
-                      client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+"\nidmsg" });
+                      client.sendMessage(msg.from, attachmentData, { caption: quotedMsg.body+"\nenv3" });
                       
                         } catch(e){}
                   },1000 + Math.floor(Math.random() * 4000) * (i+1) )
