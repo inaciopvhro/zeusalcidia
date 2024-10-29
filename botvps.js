@@ -591,8 +591,7 @@ client.on('message', async msg => {
 
 // ENVIAR MSG COM MENÇÃO AOS PARTICIPANTES
 client.on('message_create', async msg => {
-  const nomecomando = msg.startsWith();
-  console.log(nomecomando);
+ 
   if (msg.body === '!pdr' && msg.hasQuotedMsg) {
     const quotedMsg = await msg.getQuotedMessage();  
     const chat = await msg.getChat();
