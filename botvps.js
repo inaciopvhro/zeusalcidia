@@ -335,8 +335,6 @@ function confighora(horaenvio) {
 
 // EVENTO DE ESCUTA DE MENSAGENS RECEBIDAS PELA API
 client.on('message', async msg => {
-  const nomecomando = msg.startsWith();
-  console.log(nomecomando);
   if (msg.body === null) return;
   // REMOVER LINKS
   const chat = await client.getChatById(msg.id.remote);
