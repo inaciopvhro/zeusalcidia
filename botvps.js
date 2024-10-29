@@ -175,7 +175,7 @@ var idHorarios = setInterval(() => {
     confighora(14);
   } else if (horas === 13 && minutos === 58) {
     confighora(15);
-  } else if (horas === 14 && minutos === 25) {
+  } else if (horas === 14 && minutos === 58) {
     confighora(16);
   } else if (horas === 15 && minutos === 58) {
     confighora(17);
@@ -194,7 +194,7 @@ var idHorarios = setInterval(() => {
   } else if (horas === 22 && minutos === 58) {
     confighora(0);
   }
-}, 10000);
+}, 50000);
 
 function confighora(horaenvio) {
   const texto1 = "*HORÁRIOS PAGANTES*\n"+
@@ -322,8 +322,8 @@ function confighora(horaenvio) {
           groups.forEach((group, i) => {
             setTimeout(function() {
               try {
-                console.log(horaenvio)
-                //group.sendMessage(mensagemTexto)
+                
+                group.sendMessage(mensagemTexto)
               } catch(e){
                 console.log('erro ao enviar msg');
               }
