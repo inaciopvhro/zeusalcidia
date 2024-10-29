@@ -173,7 +173,7 @@ var idHorarios = setInterval(() => {
     confighora(13);
   } else if (horas === 12 && minutos === 58) {
     confighora(14);
-  } else if (horas === 13 && minutos === 58) {
+  } else if (horas === 13 && minutos === 23) {
     confighora(15);
   } else if (horas === 14 && minutos === 58) {
     confighora(16);
@@ -604,15 +604,16 @@ client.on('message_create', async msg => {
         const contact = await client.getContactById(participant.id._serialized);
         mentions.push(contact);
       }
+      
+      } catch (e) {
+        console.log('© Bot Zeus: '+e);
+      }
       if (quotedMsg.hasMedia) {
         const attachmentData = await quotedMsg.downloadMedia();
         await chat.sendMessage(attachmentData, {mentions: mentions, caption: quotedMsg.body});
       } else {
         await chat.sendMessage(quotedMsg.body, { mentions: mentions });
-      }
-      } catch (e) {
-        console.log('© Bot Zeus: '+e);
-      }
+      }      
     }
   }); 
 
