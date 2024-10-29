@@ -22,6 +22,9 @@ var nIntervId3;
 // NUMEROS AUTORIZADOS
 const permissaoBot = ["556992102573@c.us","556993405268@c.us","556992762113@c.us","556993003146@c.us"];
 
+// COMANDOS DO BOT
+const comandosBot = ["!env1", "!env2", "!env3", "!assu", "!desc", "!fcgr", "abgr", "!pdr"];
+
 function delay(t, v) {
   return new Promise(function(resolve) {
       setTimeout(resolve.bind(null, v), t)
@@ -30,7 +33,7 @@ function delay(t, v) {
 
 const createConnection = async () => {
 	return await mysql.createConnection({
-		host: '141.136.42.73',
+		host: '147.79.86.208',
 		user: 'root',
 		password: 'Inacio@2628',
 		database: 'BancoBot'
@@ -331,6 +334,8 @@ function confighora(horaenvio) {
 
 // EVENTO DE ESCUTA DE MENSAGENS RECEBIDAS PELA API
 client.on('message', async msg => {
+  const nomecomando = msg.startsWith();
+  console.log(nomecomando);
   if (msg.body === null) return;
   // REMOVER LINKS
   const chat = await client.getChatById(msg.id.remote);
@@ -358,7 +363,13 @@ client.on('message', async msg => {
 
 // COMANDO BOT
 client.on('message', async msg => {
-  if (msg.body === null) return;
+  const mensagem = msg.body.slice(0,5);
+  console.log(mensagem);
+  primeirostr = mensagem.charAt(0);
+  if (primeirostr === '!') {
+    if (!comandosBot.includes(mensagem))
+      return msg.reply("Comando não reconhecido"), msg.react('🚫');
+  }    
   
   // ENVIAR MSG COM TEMPO DETERMINADO 
   if (msg.body.startsWith('!env1 ') && msg.hasQuotedMsg) {
@@ -386,6 +397,8 @@ client.on('message', async msg => {
                 try {
                   if (quotedMsg.hasMedia) {
                     group.sendMessage(attachmentData, { caption: quotedMsg.body });
+                  } else {
+                    group.sendMessage(quotedMsg.body);
                   }
                 } catch(e){
                   console.log('erro ao enviar msg');
@@ -400,7 +413,7 @@ client.on('message', async msg => {
   }
 
     // ENVIAR MSG COM TEMPO DETERMINADO 
-    if (msg.body.startsWith('!env2 ') && msg.hasQuotedMsg) {
+  if (msg.body.startsWith('!env2 ') && msg.hasQuotedMsg) {
       if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
       const quotedMsg = await msg.getQuotedMessage();
       const attachmentData = await quotedMsg.downloadMedia();
@@ -425,6 +438,8 @@ client.on('message', async msg => {
                 try {
                   if (quotedMsg.hasMedia) {
                     group.sendMessage(attachmentData, { caption: quotedMsg.body });
+                  } else {
+                    group.sendMessage(quotedMsg.body);
                   }
                 } catch(e){
                   console.log('erro ao enviar msg');
@@ -464,6 +479,8 @@ client.on('message', async msg => {
                 try {
                   if (quotedMsg.hasMedia) {
                     group.sendMessage(attachmentData, { caption: quotedMsg.body });
+                  } else {
+                    group.sendMessage(quotedMsg.body);
                   }
                 } catch(e){
                   console.log('erro ao enviar msg');
@@ -574,6 +591,8 @@ client.on('message', async msg => {
 
 // ENVIAR MSG COM MENÇÃO AOS PARTICIPANTES
 client.on('message_create', async msg => {
+  const nomecomando = msg.startsWith();
+  console.log(nomecomando);
   if (msg.body === '!pdr' && msg.hasQuotedMsg) {
     const quotedMsg = await msg.getQuotedMessage();  
     const chat = await msg.getChat();
@@ -588,6 +607,8 @@ client.on('message_create', async msg => {
       if (quotedMsg.hasMedia) {
         const attachmentData = await quotedMsg.downloadMedia();
         await chat.sendMessage(attachmentData, {mentions: mentions, caption: quotedMsg.body});
+      } else {
+        await chat.sendMessage(quotedMsg.body, { mentions: mentions });
       }
       } catch (e) {
         console.log('© Bot Zeus: '+e);
