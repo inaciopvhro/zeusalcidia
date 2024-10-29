@@ -156,7 +156,7 @@ var idHorarios = setInterval(() => {
   var dataAtual = new Date();
   var horas = dataAtual.getHours();
   var minutos = dataAtual.getMinutes();
-//  console.log("Agora são " + horas + ":" + minutos + "h.");
+  console.log("Agora são " + horas + ":" + minutos + "h.");
   if (horas === 23 && minutos === 58) {
     confighora(1);
   } else if (horas === 6 && minutos === 58) {
@@ -194,7 +194,7 @@ var idHorarios = setInterval(() => {
   } else if (horas === 22 && minutos === 58) {
     confighora(0);
   }
-}, 50000);
+}, 10000);
 
 function confighora(horaenvio) {
   const texto1 = "*HORÁRIOS PAGANTES*\n"+
