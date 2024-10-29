@@ -173,7 +173,7 @@ var idHorarios = setInterval(() => {
     confighora(13);
   } else if (horas === 12 && minutos === 58) {
     confighora(14);
-  } else if (horas === 13 && minutos === 23) {
+  } else if (horas === 13 && minutos === 15) {
     confighora(15);
   } else if (horas === 14 && minutos === 58) {
     confighora(16);
@@ -322,7 +322,8 @@ function confighora(horaenvio) {
           groups.forEach((group, i) => {
             setTimeout(function() {
               try {
-                group.sendMessage(mensagemTexto)
+                console.log(horaenvio)
+                //group.sendMessage(mensagemTexto)
               } catch(e){
                 console.log('erro ao enviar msg');
               }
