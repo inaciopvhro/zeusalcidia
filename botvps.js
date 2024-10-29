@@ -173,9 +173,9 @@ var idHorarios = setInterval(() => {
     confighora(13);
   } else if (horas === 12 && minutos === 58) {
     confighora(14);
-  } else if (horas === 13 && minutos === 15) {
+  } else if (horas === 13 && minutos === 58) {
     confighora(15);
-  } else if (horas === 14 && minutos === 58) {
+  } else if (horas === 14 && minutos === 25) {
     confighora(16);
   } else if (horas === 15 && minutos === 58) {
     confighora(17);
