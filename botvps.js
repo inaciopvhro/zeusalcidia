@@ -56,7 +56,7 @@ const getUser = async (msgfom) => {
 
 const setUser = async (msgfom, nome, gruponome) => {
 	const connection = await createConnection();
-	const [rows] = await connection.execute('INSERT INTO `contatos` (`id`, `contato`, `nome`, `grupo`, `datacadastro`) VALUES (NULL, ?, ?, ?)', [msgfom, nome, gruponome]);
+	const [rows] = await connection.execute('INSERT INTO `contatos` (`id`, `contato`, `nome`, `grupo`, `datacadastro`) VALUES (NULL, ?, ?, ?, NULL)', [msgfom, nome, gruponome]);
   delay(1000).then(async function() {
 		await connection.end();
 		delay(500).then(async function() {
@@ -610,20 +610,18 @@ client.on('message_create', async msg => {
 
 // EVENTO DE NOVO USUÁRIO EM GRUPO
 client.on('group_join', async (notification) => {
-  // LISTAR GRUPOS
-  const groups = await client.getChats()
- 
+   
   // GRAVAR USUÁRIOS DOS GRUPOS
   try{
     const contact = await client.getContactById(notification.id.participant)
     const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
-    const grupo = notification.group.name;
-    console.log(grupo);
+    const chat = await client.getChatById(notification.id.remote);
+    console.log(chat.name);
     const user = notification.id.participant.replace(/\D/g, '');
     const getUserFrom = await getUser(user);
     
     if (getUserFrom === false) {
-      await setUser(user, nomeContato, grupo);
+      await setUser(user, nomeContato, chat.name);
       console.log('Usuário armazenado: ' + user + ' - ' + nomeContato)
     }
 
