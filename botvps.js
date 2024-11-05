@@ -56,7 +56,7 @@ const getUser = async (msgfom) => {
 
 const setUser = async (msgfom, nome, grupo) => {
 	const connection = await createConnection();
-	const [rows] = await connection.execute('INSERT INTO `contatos` (`id`, `contato`, `nome`, `grupo` ) VALUES (NULL, ?, ?, ?)', [msgfom, nome, grupo]);
+	const [rows] = await connection.execute('INSERT INTO `contatos` (`id`, `contato`, `nome`, `grupo`, `datacadastro`  ) VALUES (NULL, ?, ?, ?, NULL)', [msgfom, nome, grupo]);
   delay(1000).then(async function() {
 		await connection.end();
 		delay(500).then(async function() {
@@ -106,7 +106,6 @@ client.initialize();
 io.on('connection', function(socket) {
   socket.emit('message', '© BOT ZEUS - Iniciado');
   socket.emit('qr', './whatsappDesconetado.png');
-  console.log("iniciado");
 
 client.on('qr', (qr) => {
     console.log('QR RECEIVED', qr);
@@ -150,7 +149,7 @@ var idHorarios = setInterval(() => {
   var dataAtual = new Date();
   var horas = dataAtual.getHours();
   var minutos = dataAtual.getMinutes();
-  console.log("Agora são " + horas + ":" + minutos + "h.");
+  //console.log("Agora são " + horas + ":" + minutos + "h.");
   if (horas === 23 && minutos === 58) {
     confighora(1);
   } else if (horas === 6 && minutos === 58) {
@@ -613,18 +612,8 @@ client.on('message_create', async msg => {
 client.on('group_join', async (notification) => {
   // LISTAR GRUPOS
   const groups = await client.getChats()
-  
-  try{
-    for (const group of groups){
-      if(group.id.server.includes('g.us')){
-        console.log('Nome: ' + group.name + ' - ID: ' + group.id._serialized.replace(/\D/g,''))
-      }
-    }
-  } catch (e){
-    console.log('© Inacio Informatica: '+e)
-  }
-
-  // GRAVAR USUÁRIOS DO GRUPOS
+ 
+  // GRAVAR USUÁRIOS DOS GRUPOS
   try{
     const contact = await client.getContactById(notification.id.participant)
     const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
@@ -642,7 +631,7 @@ client.on('group_join', async (notification) => {
     }
   }
   catch(e){
-    console.log('Não foi possível armazenar o usuário' + e)
+    console.log('Não foi possível armazenar o usuário: ' + e)
   }  
 
   // MENSAGEM DE SAUDAÇÃO
@@ -653,8 +642,6 @@ client.on('group_join', async (notification) => {
 
     const mensagemTexto = `@${contact.number}!` + textos;
     const chat = await client.getChatById(notification.id.remote);
-
-    console.log('Grupo: ' + notification.id.remote + ' - Mensagem: ' + mensagemTexto);
 
     delay(1000).then(async function() {
       try {
