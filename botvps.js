@@ -54,9 +54,9 @@ const getUser = async (msgfom) => {
 	return false;
 };
 
-const setUser = async (msgfom, nome, grupo) => {
+const setUser = async (msgfom, nome, gruponome) => {
 	const connection = await createConnection();
-	const [rows] = await connection.execute('INSERT INTO `contatos` (`id`, `contato`, `nome`, `grupo`, `datacadastro`  ) VALUES (NULL, ?, ?, ?, NULL)', [msgfom, nome, grupo]);
+	const [rows] = await connection.execute('INSERT INTO `contatos` (`id`, `contato`, `nome`, `grupo`, `datacadastro`) VALUES (NULL, ?, ?, ?)', [msgfom, nome, gruponome]);
   delay(1000).then(async function() {
 		await connection.end();
 		delay(500).then(async function() {
@@ -618,6 +618,7 @@ client.on('group_join', async (notification) => {
     const contact = await client.getContactById(notification.id.participant)
     const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
     const grupo = notification.id.name;
+    console.log(grupo);
     const user = notification.id.participant.replace(/\D/g, '');
     const getUserFrom = await getUser(user);
     
