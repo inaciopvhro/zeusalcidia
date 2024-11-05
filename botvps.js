@@ -628,11 +628,10 @@ client.on('group_join', async (notification) => {
   try{
     const contact = await client.getContactById(notification.id.participant)
     const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
-    const grupo = await client.getChat(notification.id.participant)
+    const grupo = notification.id.name;
     const user = notification.id.participant.replace(/\D/g, '');
     const getUserFrom = await getUser(user);
     
-
     if (getUserFrom === false) {
       await setUser(user, nomeContato, grupo);
       console.log('Usuário armazenado: ' + user + ' - ' + nomeContato)
