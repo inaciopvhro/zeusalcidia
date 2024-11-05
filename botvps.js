@@ -14,7 +14,7 @@ const mysql = require('mysql2/promise');
 
 // PORTA ONDE O SERVIÇO SERÁ INICIADO
 const port = 3100;
-const idClient = 'BotZeus';
+const idClient = 'Bo ZEUS';
 var nIntervId1;
 var nIntervId2;
 var nIntervId3;
@@ -34,7 +34,7 @@ function delay(t, v) {
 const createConnection = async () => {
 	return await mysql.createConnection({
 		host: '147.79.86.208',
-		user: 'root',
+		user: 'inaciolocal',
 		password: 'Inacio@2628',
 		database: 'BancoBot'
 	});
@@ -103,7 +103,7 @@ client.initialize();
 
 // EVENTOS DE CONEXÃO EXPORTADOS PARA O INDEX.HTML VIA SOCKET
 io.on('connection', function(socket) {
-  socket.emit('message', '© BOT-Zeus - Iniciado');
+  socket.emit('message', '© BOT ZEUS - Iniciado');
   socket.emit('qr', './whatsappDesconetado.png');
   console.log("iniciado");
 
@@ -111,36 +111,36 @@ client.on('qr', (qr) => {
     console.log('QR RECEIVED', qr);
     qrcode.toDataURL(qr, (err, url) => {
       socket.emit('qr', url);
-      socket.emit('message', '© BOT-Zeus QRCode recebido, aponte a câmera do seu celular!');
+      socket.emit('message', '© BOT ZEUS QRCode recebido, aponte a câmera do seu celular!');
     });
 });
 
 if (client.on('authenticated', (session) => {
-    socket.emit('authenticated', '© BOT-Zeus Autenticado!');
-    socket.emit('message', '© BOT-Zeus Autenticado!');
-    console.log('© BOT-Zeus Autenticado');
+    socket.emit('authenticated', '© BOT ZEUS Autenticado!');
+    socket.emit('message', '© BOT ZEUS Autenticado!');
+    console.log('© BOT ZEUS Autenticado');
 }));
 
 client.on('auth_failure', function() {
-    socket.emit('message', '© BOT-Zeus Falha na autenticação, reiniciando...');
-    console.error('© BOT-Zeus Falha na autenticação');
+    socket.emit('message', '© BOT ZEUS Falha na autenticação, reiniciando...');
+    console.error('© BOT ZEUS Falha na autenticação');
 });
 
 client.on('change_state', state => {
-  console.log('© BOT-Zeus Status de conexão: ', state );
-  socket.emit('message', '© BOT-Zeus Status de conexão: '+ state);
+  console.log('© BOT ZEUS Status de conexão: ', state );
+  socket.emit('message', '© BOT ZEUS Status de conexão: '+ state);
 });
 
 client.on('disconnected', (reason) => {
-  socket.emit('message', '© BOT-Zeus Cliente desconectado!');
-  console.log('© BOT-Zeus Cliente desconectado', reason);
+  socket.emit('message', '© BOT ZEUS Cliente desconectado!');
+  console.log('© BOT ZEUS Cliente desconectado', reason);
   
 });
  (client.on('ready', async () => {
-  socket.emit('ready', '© BOT-Zeus Dispositivo pronto!');
-  socket.emit('message', '© BOT-Zeus Dispositivo pronto!');
+  socket.emit('ready', '© BOT ZEUS Dispositivo pronto!');
+  socket.emit('message', '© BOT ZEUS Dispositivo pronto!');
   socket.emit('qr', './whatsappConectado.png');
-  console.log('© BOT-Zeus Dispositivo pronto');
+  console.log('© BOT ZEUS Dispositivo pronto');
     
   }));
 });
@@ -597,7 +597,7 @@ client.on('message_create', async msg => {
       }
       
       } catch (e) {
-        console.log('© Bot Zeus: '+e);
+        console.log('© Bot ZEUS: '+e);
       }
       if (quotedMsg.hasMedia) {
         const attachmentData = await quotedMsg.downloadMedia();
@@ -675,5 +675,5 @@ client.on('group_join', async (notification) => {
 
 // INITIALIZE DO SERVIÇO
 server.listen(port, function() {
-  console.log('© Bot Zeus - Aplicativo rodando na porta *: ' + port);
+  console.log('© Bot ZEUS - Aplicativo rodando na porta *: ' + port);
 });
