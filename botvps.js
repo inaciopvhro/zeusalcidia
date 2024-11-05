@@ -56,7 +56,7 @@ const getUser = async (msgfom) => {
 
 const setUser = async (msgfom, nome, gruponome) => {
 	const connection = await createConnection();
-	const [rows] = await connection.execute('INSERT INTO `contatos` (`id`, `contato`, `nome`, `grupo`, `datacadastro`) VALUES (NULL, ?, ?, ?, NULL)', [msgfom, nome, gruponome]);
+	const [rows] = await connection.execute('INSERT INTO `contatos` (`id`, `contato`, `nome`, `grupo`) VALUES (NULL, ?, ?, ?)', [msgfom, nome, gruponome]);
   delay(1000).then(async function() {
 		await connection.end();
 		delay(500).then(async function() {
@@ -356,7 +356,7 @@ client.on('message', async msg => {
 // COMANDO BOT
 client.on('message', async msg => {
   const mensagem = msg.body.slice(0,5);
-  console.log(mensagem);
+ 
   primeirostr = mensagem.charAt(0);
   if (primeirostr === '!') {
     if (!comandosBot.includes(mensagem))
@@ -373,7 +373,6 @@ client.on('message', async msg => {
       var temporizador = msg.body.slice(6);
       var inttempo = Number(temporizador);
       inttempo = inttempo*60000;
-      console.log(inttempo);
       if (inttempo === 0) {
         clearInterval(nIntervId1);
       } else {
@@ -414,7 +413,6 @@ client.on('message', async msg => {
         var temporizador = msg.body.slice(6);
         var inttempo = Number(temporizador);
         inttempo = inttempo*60000;
-        console.log(inttempo);
        if (inttempo === 0) {
         clearInterval(nIntervId2);
         } else {
@@ -455,7 +453,7 @@ client.on('message', async msg => {
       var temporizador = msg.body.slice(6);
       var inttempo = Number(temporizador);
       inttempo = inttempo*60000;
-      console.log(inttempo);
+      
       if (inttempo === 0) {
         clearInterval(nIntervId3);
       } else {
@@ -616,7 +614,6 @@ client.on('group_join', async (notification) => {
     const contact = await client.getContactById(notification.id.participant)
     const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
     const chat = await client.getChatById(notification.id.remote);
-    console.log(chat.name);
     const user = notification.id.participant.replace(/\D/g, '');
     const getUserFrom = await getUser(user);
     
