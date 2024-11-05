@@ -613,7 +613,8 @@ client.on('group_join', async (notification) => {
   try{
     const contact = await client.getContactById(notification.id.participant)
     const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
-    const grupoid = await client.getChatById(notification.id.remote);
+    const grupoid = await client.getChatById(notification.id);
+    console.log(grupoid.name);
     const user = notification.id.participant.replace(/\D/g, '');
     const getUserFrom = await getUser(user);
     
