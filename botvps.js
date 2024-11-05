@@ -11,6 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 const mysql = require('mysql2/promise');
+const { group } = require('console');
 
 // PORTA ONDE O SERVIÇO SERÁ INICIADO
 const port = 3100;
@@ -53,9 +54,9 @@ const getUser = async (msgfom) => {
 	return false;
 };
 
-const setUser = async (msgfom, nome) => {
+const setUser = async (msgfom, nome, grupo) => {
 	const connection = await createConnection();
-	const [rows] = await connection.execute('INSERT INTO `contatos` (`id`, `contato`, `nome`) VALUES (NULL, ?, ?)', [msgfom, nome]);
+	const [rows] = await connection.execute('INSERT INTO `contatos` (`id`, `contato`, `nome`, `grupo` ) VALUES (NULL, ?, ?, ?)', [msgfom, nome, grupo]);
   delay(1000).then(async function() {
 		await connection.end();
 		delay(500).then(async function() {
@@ -627,11 +628,13 @@ client.on('group_join', async (notification) => {
   try{
     const contact = await client.getContactById(notification.id.participant)
     const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
+    const grupo = await client.getChat(notification.id.participant)
     const user = notification.id.participant.replace(/\D/g, '');
     const getUserFrom = await getUser(user);
+    
 
     if (getUserFrom === false) {
-      await setUser(user, nomeContato);
+      await setUser(user, nomeContato, grupo);
       console.log('Usuário armazenado: ' + user + ' - ' + nomeContato)
     }
 
