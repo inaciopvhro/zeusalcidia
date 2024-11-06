@@ -612,6 +612,9 @@ client.on('message_create', async msg => {
           const contact = await client.getContactById(participant.id._serialized);
           console.log(contact)
           const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
+          if (nomeContato === undefined) {
+            nomeContato = "sem nome";
+          }
           console.log(nomeContato)
           const user = participant.id._serialized.replace(/\D/g, '');
           console.log(user)
