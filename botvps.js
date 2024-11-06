@@ -328,6 +328,12 @@ function confighora(horaenvio) {
 // EVENTO DE ESCUTA DE MENSAGENS RECEBIDAS PELA API
 client.on('message', async msg => {
   if (msg.body === null) return;
+  const mensagem = msg.body.slice(0,5);
+  primeirostr = mensagem.charAt(0);
+  if (primeirostr === '!') {
+    if (!comandosBot.includes(mensagem))
+      return msg.reply("Comando não reconhecido"), msg.react('🚫');
+  }      
   // REMOVER LINKS
   const chat = await client.getChatById(msg.id.remote);
   for (const participant of chat.participants) {
@@ -354,13 +360,7 @@ client.on('message', async msg => {
 
 // COMANDO BOT
 client.on('message', async msg => {
-  const mensagem = msg.body.slice(0,5);
-  primeirostr = mensagem.charAt(0);
-  if (primeirostr === '!') {
-    if (!comandosBot.includes(mensagem))
-      return msg.reply("Comando não reconhecido"), msg.react('🚫');
-  }    
-  
+ 
   // ENVIAR MSG COM TEMPO DETERMINADO 
   if (msg.body.startsWith('!env1 ') && msg.hasQuotedMsg) {
     if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
@@ -579,30 +579,29 @@ client.on('message', async msg => {
 
 // ENVIAR MSG COM MENÇÃO AOS PARTICIPANTES
 client.on('message_create', async msg => {
- 
   if (msg.body === '!pdr' && msg.hasQuotedMsg) {
-    const quotedMsg = await msg.getQuotedMessage();  
     const chat = await msg.getChat();
-    try {
-    let mentions = [];
-    for(let participant of chat.participants) {
-      if (participant.id._serialized === msg.author && !participant.isAdmin) 
-        return msg.reply("Você não pode enviar esse comando.");
-        const contact = await client.getContactById(participant.id._serialized);
-        mentions.push(contact);
-      }
-      
-      } catch (e) {
-        console.log('© Bot ZEUS: '+e);
+    const quotedMsg = await msg.getQuotedMessage();  
+    try{
+      let mentions = [];
+      for(let participant of chat.participants) {
+        if (participant.id._serialized === msg.author && !participant.isAdmin) 
+          return msg.reply("Você não pode enviar esse comando.");
+          const contact = await client.getContactById(participant.id._serialized);
+          mentions.push(contact);
+          
       }
       if (quotedMsg.hasMedia) {
         const attachmentData = await quotedMsg.downloadMedia();
         await chat.sendMessage(attachmentData, {mentions: mentions, caption: quotedMsg.body});
       } else {
         await chat.sendMessage(quotedMsg.body, { mentions: mentions });
-      }      
-    };
- }); 
+      }
+    } catch (e){
+      console.log('© Bot Zeus '+e)
+    }
+  }
+});
 
 // EVENTO DE NOVO USUÁRIO EM GRUPO
 client.on('group_join', async (notification) => {
