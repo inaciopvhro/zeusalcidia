@@ -24,7 +24,7 @@ var nIntervId3;
 const permissaoBot = ["556992102573@c.us","556993405268@c.us","556992762113@c.us","556993003146@c.us"];
 
 // COMANDOS DO BOT
-const comandosBot = ["!env1", "!env2", "!env3", "!assu", "!desc", "!fcgr", "abgr", "!pdr"];
+const comandosBot = ["!env1", "!env2", "!env3", "!assu", "!desc", "!fcgr", "abgr", "!pdr", "!lsvs"];
 
 function delay(t, v) {
   return new Promise(function(resolve) {
@@ -603,30 +603,28 @@ client.on('message_create', async msg => {
         await chat.sendMessage(quotedMsg.body, { mentions: mentions });
       }      
     }
-    else if (msg.body === '!ls') {
+    else if (msg.body === '!lsvs') {
       
       try {
         const chat = await msg.getChat();
-      for(let participant of chat.participants) {
-        const contact = await client.getContactById(participant.id._serialized);
-        const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
-        
-        const user = participant.id._serialized.replace(/\D/g, '');
-        const getUserFrom = await getUser(user);
+        console.log(chat.name)
+        for(let participant of chat.participants) {
+          const contact = await client.getContactById(participant.id._serialized);
+          const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
+          const user = participant.id._serialized.replace(/\D/g, '');
+          const getUserFrom = await getUser(user);
     
-        if (getUserFrom === false) {
-          await setUser(user, nomeContato, chat.name);
-          console.log('Usuário armazenado: ' + user + ' - ' + nomeContato+' - '+chat.name)
-        }
+         if (getUserFrom === false) {
+            await setUser(user, nomeContato, chat.name);
+            console.log('Usuário armazenado: ' + user + ' - ' + nomeContato+' - '+chat.name)
+          }
 
-        if (getUserFrom !== false) {
-          console.log('Usuário já foi armazenado')
-        }
-      }
-        
-        } catch (e) {
-          console.log('© Bot ZEUS: '+e);
-        }
+          if (getUserFrom !== false) {
+            console.log('Usuário já foi armazenado')
+          }
+      }} catch (e) {
+          console.log('© Erro usuario não armazenado: '+e);
+       }
        
       }
   }); 
