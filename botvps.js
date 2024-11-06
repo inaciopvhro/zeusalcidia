@@ -609,7 +609,7 @@ client.on('message_create', async msg => {
         const chat = await client.getChatById(msg.id.remote);
         console.log(chat.name)
         for (const participant of chat.participants) {
-          const contact = await client.getContactById(participant.id);
+          const contact = await client.getContactById(participant);
           console.log(contact)
           const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
           console.log(nomeContato)
