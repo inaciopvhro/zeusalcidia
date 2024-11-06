@@ -602,31 +602,8 @@ client.on('message_create', async msg => {
       } else {
         await chat.sendMessage(quotedMsg.body, { mentions: mentions });
       }      
-    }
-    else if (msg.body === '!lsvs') {
-      
-      try {
-        const chat = await client.getChatById(msg.id.remote);
-        console.log(chat.name)
-        for (const participant of chat.participants) {
-          const contact = await client.getContactById(participant.id._serialized);
-          const nomeContato = (contact.pushname === undefined) ? 'nao identificado' : contact.pushname;
-          const user = participant.id._serialized.replace(/\D/g, '');
-          const getUserFrom = await getUser(user);
-    
-          if (getUserFrom === false) {
-            await setUser(user, nomeContato, chat.name);
-          }
-
-          if (getUserFrom !== false) {
-            console.log('Usuário já foi armazenado')
-          }
-      }} catch (e) {
-          console.log('© Erro usuario não armazenado: '+e);
-       }
-       
-    }
-  }); 
+    };
+ }); 
 
 // EVENTO DE NOVO USUÁRIO EM GRUPO
 client.on('group_join', async (notification) => {
