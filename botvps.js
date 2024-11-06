@@ -611,14 +611,11 @@ client.on('message_create', async msg => {
         for (const participant of chat.participants) {
           const contact = await client.getContactById(participant.id._serialized);
           const nomeContato = (contact.pushname === undefined) ? 'nao identificado' : contact.pushname;
-          
-          console.log(nomeContato)
           const user = participant.id._serialized.replace(/\D/g, '');
           const getUserFrom = await getUser(user);
     
           if (getUserFrom === false) {
             await setUser(user, nomeContato, chat.name);
-            console.log('Usuário armazenado: ' + user + ' - ' + nomeContato+' - '+chat.name)
           }
 
           if (getUserFrom !== false) {
@@ -628,7 +625,7 @@ client.on('message_create', async msg => {
           console.log('© Erro usuario não armazenado: '+e);
        }
        
-      }
+    }
   }); 
 
 // EVENTO DE NOVO USUÁRIO EM GRUPO
