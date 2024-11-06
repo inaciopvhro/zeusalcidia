@@ -610,15 +610,13 @@ client.on('message_create', async msg => {
         console.log(chat.name)
         for (const participant of chat.participants) {
           const contact = await client.getContactById(participant.id._serialized);
-          console.log(contact)
-          const nomeContato = (contact.pushname === undefined) ? contact.name : contact.pushname;
+          const nomeContato = (contact.pushname === undefined) ? 'nao identificado' : contact.pushname;
           
           console.log(nomeContato)
           const user = participant.id._serialized.replace(/\D/g, '');
-          console.log(user)
           const getUserFrom = await getUser(user);
     
-         if (getUserFrom === false) {
+          if (getUserFrom === false) {
             await setUser(user, nomeContato, chat.name);
             console.log('Usuário armazenado: ' + user + ' - ' + nomeContato+' - '+chat.name)
           }
