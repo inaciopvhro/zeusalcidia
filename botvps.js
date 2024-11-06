@@ -356,7 +356,6 @@ client.on('message', async msg => {
 // COMANDO BOT
 client.on('message', async msg => {
   const mensagem = msg.body.slice(0,5);
- 
   primeirostr = mensagem.charAt(0);
   if (primeirostr === '!') {
     if (!comandosBot.includes(mensagem))
@@ -604,6 +603,32 @@ client.on('message_create', async msg => {
         await chat.sendMessage(quotedMsg.body, { mentions: mentions });
       }      
     }
+    else if (msg.body === '!ls') {
+      
+      try {
+        const chat = await msg.getChat();
+      for(let participant of chat.participants) {
+        const contact = await client.getContactById(participant.id._serialized);
+        const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
+        
+        const user = participant.id._serialized.replace(/\D/g, '');
+        const getUserFrom = await getUser(user);
+    
+        if (getUserFrom === false) {
+          await setUser(user, nomeContato, chat.name);
+          console.log('Usuário armazenado: ' + user + ' - ' + nomeContato+' - '+chat.name)
+        }
+
+        if (getUserFrom !== false) {
+          console.log('Usuário já foi armazenado')
+        }
+      }
+        
+        } catch (e) {
+          console.log('© Bot ZEUS: '+e);
+        }
+       
+      }
   }); 
 
 // EVENTO DE NOVO USUÁRIO EM GRUPO
@@ -614,7 +639,6 @@ client.on('group_join', async (notification) => {
     const contact = await client.getContactById(notification.id.participant)
     const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
     const grupoid = await client.getChatById(notification.id.remote);
-    console.log(grupoid.name);
     const user = notification.id.participant.replace(/\D/g, '');
     const getUserFrom = await getUser(user);
     
