@@ -606,12 +606,15 @@ client.on('message_create', async msg => {
     else if (msg.body === '!lsvs') {
       
       try {
-        const chat = await msg.getChat();
+        const chat = await client.getChatById(msg.id.remote);
         console.log(chat.name)
-        for(let participant of chat.participants) {
+        for (const participant of chat.participants) {
           const contact = await client.getContactById(participant.id._serialized);
+          console.log(contact)
           const nomeContato = (contact.pushname === undefined) ? contact.verifiedName : contact.pushname;
+          console.log(nomeContato)
           const user = participant.id._serialized.replace(/\D/g, '');
+          console.log(user)
           const getUserFrom = await getUser(user);
     
          if (getUserFrom === false) {
