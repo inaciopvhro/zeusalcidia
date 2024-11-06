@@ -11,7 +11,6 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 const mysql = require('mysql2/promise');
-const { group } = require('console');
 
 // PORTA ONDE O SERVIÇO SERÁ INICIADO
 const port = 3100;
