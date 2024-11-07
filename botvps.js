@@ -14,7 +14,7 @@ const mysql = require('mysql2/promise');
 
 // PORTA ONDE O SERVIÇO SERÁ INICIADO
 const port = 3100;
-const idClient = 'BotZEUS';
+const idClient = 'BotZeus';
 var nIntervId1;
 var nIntervId2;
 var nIntervId3;
