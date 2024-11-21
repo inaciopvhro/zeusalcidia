@@ -335,26 +335,25 @@ client.on('message', async msg => {
       return msg.reply("Comando não reconhecido"), msg.react('🚫');
   }      
   // REMOVER LINKS
-  const chat = await client.getChatById(msg.id.remote)
-  const participant = chat.participants
+  const chat = await client.getChatById(msg.id.remote);
+  for (const participant of chat.participants) {
     if (participant.id._serialized === msg.author && participant.isAdmin) {
       return;
     }
     if ((participant.id._serialized === msg.author && !participant.isAdmin) &&
         (msg.body.toLowerCase().includes("www")
           || msg.body.toLowerCase().includes("http")
-          || msg.body.toLowerCase().includes("https")
           || msg.body.toLowerCase().includes(".br")
           || msg.body.toLowerCase().includes("://")
           || msg.body.toLowerCase().includes(".com.br")
           || msg.body.toLowerCase().includes(".com"))){
       try{
         await msg.delete(true)
-        await client.sendMessage(msg.from, "🤚🛑 link não autorizado 🛑🤚")
+        await client.sendMessage(msg.from, "😎 Proibido enviar link")
       } catch (e){
-        console.log('© Inácio Informatica')
+        console.log('© Inacio Informatica')
       }
-    
+    }
   }
 });
 
