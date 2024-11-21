@@ -336,7 +336,7 @@ client.on('message', async msg => {
   }      
   // REMOVER LINKS
   const chat = await client.getChatById(msg.id.remote);
-  for (const participant of chat.participants) {
+  for (let participant of chat.participants) {
     if (participant.id._serialized === msg.author && participant.isAdmin) {
       return;
     }
