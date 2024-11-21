@@ -23,7 +23,7 @@ var nIntervId3;
 const permissaoBot = ["556992102573@c.us","556993405268@c.us","556992762113@c.us","556993003146@c.us"];
 
 // COMANDOS DO BOT
-const comandosBot = ["!env1", "!env2", "!env3", "!assu", "!desc", "!fcgr", "abgr", "!pdr", "!lsvs"];
+const comandosBot = ["!env1", "!env2", "!env3", "!assu", "!desc", "!fcgr", "abgr", "!pdr"];
 
 function delay(t, v) {
   return new Promise(function(resolve) {
