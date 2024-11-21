@@ -335,7 +335,8 @@ client.on('message', async msg => {
       return msg.reply("Comando não reconhecido"), msg.react('🚫');
   }      
   // REMOVER LINKS
-  const chat = await client.getChatById(msg.id.remote);
+  const chat = await client.getChatById(msg.id.remote)
+  const participant = chat.participants
     if (participant.id._serialized === msg.author && participant.isAdmin) {
       return;
     }
