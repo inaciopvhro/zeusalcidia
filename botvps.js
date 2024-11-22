@@ -336,11 +336,11 @@ client.on('message', async msg => {
   }      
   // REMOVER LINKS
   const chat = await client.getChatById(msg.id.remote);
-  for (let participant of chat.participants) {
-    if (participant.id._serialized === msg.author && participant.isAdmin) {
+  //for (let participant of chat.participants) {
+    if (msg.id._serialized === msg.author && participant.isAdmin) {
       return;
     }
-    if ((participant.id._serialized === msg.author && !participant.isAdmin) &&
+    if ((msg.id._serialized === msg.author && !participant.isAdmin) &&
         (msg.body.toLowerCase().includes("www")
           || msg.body.toLowerCase().includes("http")
           || msg.body.toLowerCase().includes(".br")
@@ -354,7 +354,7 @@ client.on('message', async msg => {
         console.log('© Inacio Informatica')
       }
     }
-  }
+  
 });
 
 // COMANDO BOT
