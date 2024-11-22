@@ -336,11 +336,11 @@ client.on('message', async msg => {
   }      
   // REMOVER LINKS
   const chat = await client.getChatById(msg.id.remote);
-  //for (let participant of chat.participants) {
-    if (msg.id._serialized === msg.author && participant.isAdmin) {
+  
+    if (chat.participants.id._serialized === msg.author && chat.participants.isAdmin) {
       return;
     }
-    if ((msg.id._serialized === msg.author && !participant.isAdmin) &&
+    if ((chat.participants.id._serialized === msg.author && chat.participants.isAdmin) &&
         (msg.body.toLowerCase().includes("www")
           || msg.body.toLowerCase().includes("http")
           || msg.body.toLowerCase().includes(".br")
