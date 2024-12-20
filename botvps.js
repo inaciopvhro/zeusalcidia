@@ -144,7 +144,7 @@ client.on('disconnected', (reason) => {
   }));
 });
 
-var idHorarios = setInterval(() => {
+setInterval(() => {
   var dataAtual = new Date();
   var horas = dataAtual.getHours();
   var minutos = dataAtual.getMinutes();
@@ -153,7 +153,7 @@ var idHorarios = setInterval(() => {
     confighora(1);
   } else if (horas === 6 && minutos === 58) {
     confighora(8);
-  } else if (horas === 7 && minutos === 58) {
+  } else if (horas === 7 && minutos === 12) {
     confighora(9);
   } else if (horas === 8 && minutos === 58) {
     confighora(10);
@@ -169,7 +169,7 @@ var idHorarios = setInterval(() => {
     confighora(15);
   } else if (horas === 14 && minutos === 58) {
     confighora(16);
-  } else if (horas === 15 && minutos === 10) {
+  } else if (horas === 15 && minutos === 58) {
     confighora(17);
   } else if (horas === 16 && minutos === 58) {
     confighora(18);
