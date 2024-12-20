@@ -153,7 +153,7 @@ setInterval(() => {
     confighora(1);
   } else if (horas === 6 && minutos === 58) {
     confighora(8);
-  } else if (horas === 7 && minutos === 12) {
+  } else if (horas === 7 && minutos === 59) {
     confighora(9);
   } else if (horas === 8 && minutos === 58) {
     confighora(10);
