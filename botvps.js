@@ -140,6 +140,13 @@ client.on('disconnected', (reason) => {
   socket.emit('message', '© BOT ZEUS Dispositivo pronto!');
   socket.emit('qr', './whatsappConectado.png');
   console.log('© BOT ZEUS Dispositivo pronto');
+  const groups = await client.getChats()
+  for (const group of groups){
+    if(group.id.server.includes('g.us')){
+      socket.emit('relatorio', 'Nome: ' + group.name + ' - ID: ' + group.id._serialized.split('@')[0]);
+      
+    }
+  }  
     
   }));
 });
