@@ -607,6 +607,13 @@ client.on('message_create', async msg => {
       console.log('© Bot Zeus '+e)
     }
   }
+  if (msg.body === '!hrs') {
+    var data = new Date();
+    var hrs = data.getHours();
+    confighora(hrs);  
+  }
+
+
 });
 
 // EVENTO DE NOVO USUÁRIO EM GRUPO
