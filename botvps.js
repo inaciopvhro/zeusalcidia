@@ -610,7 +610,7 @@ client.on('message_create', async msg => {
   if (msg.body === '!hrs') {
     var data = new Date();
     var hrs = data.getHours();
-    confighora(hrs);  
+    confighora(hrs+1);  
   }
 
 
