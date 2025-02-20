@@ -23,7 +23,7 @@ var nIntervId3;
 const permissaoBot = ["556992102573@c.us","556993405268@c.us","556992762113@c.us","556993003146@c.us"];
 
 // COMANDOS DO BOT
-const comandosBot = ["!env1", "!env2", "!env3", "!assu", "!desc", "!fcgr", "abgr", "!pdr"];
+const comandosBot = ["!env1", "!env2", "!env3", "!assu", "!desc", "!fcgr", "abgr", "!pdr", "!hrs"];
 
 function delay(t, v) {
   return new Promise(function(resolve) {
@@ -608,6 +608,7 @@ client.on('message_create', async msg => {
     }
   }
   if (msg.body === '!hrs') {
+    if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
     var data = new Date();
     var hrs = data.getHours();
     confighora(hrs+1);  
