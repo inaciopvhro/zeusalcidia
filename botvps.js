@@ -20,7 +20,7 @@ var nIntervId2;
 var nIntervId3;
 
 // NUMEROS AUTORIZADOS
-const permissaoBot = ["5569992102573@c.us","556993405268@c.us","55693654141@c.us","556992666009@c.us","5599981136493@c.us"];
+const permissaoBot = ["556992102573@c.us","556993405268@c.us","55693654141@c.us","556992666009@c.us","5599981136493@c.us"];
 
 // COMANDOS DO BOT
 const comandosBot = ["!env1", "!env2", "!env3", "!assu", "!desc", "!fcgr", "abgr", "!pdr", "!hrs"];
@@ -369,7 +369,7 @@ client.on('message', async msg => {
  
   // ENVIAR MSG COM TEMPO DETERMINADO 
   if (msg.body.startsWith('!env1 ') && msg.hasQuotedMsg) {
-    if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
+   // if (!permissaoBot.includes(msg.author || msg.from)) return msg.reply("Você não pode enviar esse comando.");
     const quotedMsg = await msg.getQuotedMessage();
     const attachmentData = await quotedMsg.downloadMedia();
     const chat = await client.getChatById(msg.id.remote);
